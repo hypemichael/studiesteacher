@@ -174,7 +174,7 @@ sessionStorage.answerd = answerD;
 sessionStorage.correctAnswer = correctAnswer;
 alert("questions saved");
 }).catch(function(err) {
-    // This code runs if there were any errors
+ 
     console.log(err);
 });
 

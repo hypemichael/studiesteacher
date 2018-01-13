@@ -1,7 +1,7 @@
 directories:
   output: dist
   buildResources: build
-appId: yourappid
+appId: Studies-Teacher-WorkSpace
 dmg:
   contents:
     - x: 110
