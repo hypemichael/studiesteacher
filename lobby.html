@@ -1,0 +1,113 @@
+<html>
+<head>
+<link rel = "stylesheet" href="font-awesome-4.7.0\css\font-awesome.min.css">
+<style>
+
+body, html{
+font-family:verdana;
+overflow :hidden;
+}
+#flexbox1{
+display:flex;
+width:100%;
+justify-content:center;
+}
+#flexbox2{
+display:flex;
+width:100%;
+justify-content:center;
+}
+#flexbox1 > button{
+width:250px;
+height:200px;
+background-color: purple;
+color:white;
+font-size:25px;
+border-style:solid;
+border-color:white;
+line-height:200px;
+text-align:center;
+}
+#flexbox2 > button{
+width:250px;
+height:200px;
+background-color: purple;
+color:white;
+font-size:25px;
+border-style:solid;
+border-color:white;
+line-height:200px;
+text-align:center;
+}
+
+#mail:hover{
+animation: background;
+animation-duration:4s;
+  animation-fill-mode: forwards;
+}
+#work:hover{
+animation: background;
+animation-duration:4s;
+  animation-fill-mode: forwards;
+}
+#chat:hover{
+animation: background;
+animation-duration:4s;
+  animation-fill-mode: forwards;
+}
+#files:hover{
+
+animation: background;
+animation-duration:4s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes background {
+    from {background-color: purple;}
+    to {background-color: blue;}
+}
+</style>
+<script>
+const ipcRenderer = require('electron').ipcRenderer;
+        // wait for an updateReady message
+        ipcRenderer.on('updateReady', function(event, text) {
+            // changes the text of the button
+            var container = document.getElementById('ready');
+           var conf = window.confirm("new version ready!");
+		   
+		   if(conf == true){
+		   ipcRenderer.send('quitAndInstall');
+		   }
+        });
+		
+		</script>
+<script src="js/lobby.js"></script>
+</head>
+<body>
+<br>
+<br>
+<br>
+
+<div id="flexbox1">
+<button id="work" class="button">
+Work
+<i class="fa fa-briefcase" aria-hidden="true"></i>
+</button>
+<button id="chat" class="button">
+Chat
+<i class="fa fa-commenting-o" aria-hidden="true"></i>
+</button>
+</div>
+<div id="flexbox2">
+<button id="mail" class="button">
+Mail
+<i class="fa fa-envelope-o" aria-hidden="true"></i>
+</button>
+<button id="files" class="button">
+Files
+<i class="fa fa-files-o" aria-hidden="true"></i>
+</button>
+</div>
+</body>
+
+</html>

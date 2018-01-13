@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel = "stylesheet" href="..\font-awesome-4.7.0\css\font-awesome.min.css">
+<style>
+
+body,html{
+
+overflow:hidden;
+}
+
+#modal{
+width:100%;
+height:100%;
+background-color:gray;
+opacity:6;
+line-height:100%;
+text-align:center;
+display:none;
+z-index:1;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey; 
+    border-radius: 5px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: gray; 
+    border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: blue; 
+}
+.navbar {
+    overflow: hidden;
+    background-color: #333;
+    font-family: Arial;
+}
+
+.navbar a {
+    float: left;
+    font-size: 16px;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.dropdown {
+    float: left;
+    overflow: hidden;
+}
+
+.dropdown .dropbtn {
+    font-size: 16px;    
+    border: none;
+    outline: none;
+    color: white;
+    padding: 14px 16px;
+    background-color: inherit;
+}
+
+.navbar a:hover, .dropdown:hover .dropbtn {
+    background-color: red;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    float: none;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+#closewindow{
+float:right;
+}
+.container{
+background-color:lightgray;
+width:100%;
+height:700px;
+
+}
+
+#questionsraw{
+width:40%;
+height:90%;
+background-color:white;
+display:inline-block;
+margin:5px;
+position:absolute;
+}
+
+#solution{
+width:30%;
+height:90%;
+background-color:white;
+display:inline-block;
+margin:5px;
+position:absolute;
+right:320px;
+}
+
+#output{
+width:25%;
+height:90%;
+background-color:white;
+display:inline-block;
+margin:5px;
+position:absolute;
+right:10px;
+}
+
+#questiontext{
+width:90%;
+height:20%;
+border-style:dotted;
+margin: 0 auto;
+border-width:1px;
+margin-bottom:5px;
+border-color:silver;
+word-wrap: break-word;
+overflow-y:scroll;
+}
+.answertext{
+width:90%;
+height:14%;
+border-style:solid;
+margin: 0 auto;
+border-style:dotted;
+margin: 0 auto;
+border-width:1px;
+margin-bottom:5px;
+border-color:silver;
+word-wrap: break-word;
+overflow-y:scroll;
+}
+
+.solutiontext{
+width:90%;
+height:15%;
+border-style:solid;
+margin: 0 auto;
+border-style:dotted;
+margin: 0 auto;
+border-width:1px;
+margin-bottom:5px;
+border-color:silver;
+word-wrap: break-word;
+overflow-y:scroll;
+}
+
+.MJX-viewtext{
+width:100%;
+height:15%;
+border-style:solid;
+margin: 0 auto;
+border-style:dotted;
+margin: 0 auto;
+border-width:1px;
+margin-bottom:5px;
+border-color:silver;
+word-wrap: break-word;
+overflow-y:scroll;
+}
+
+#imagecontainer{
+width:300px;
+height:300px;
+position:absolute;
+margin-left:40%;
+background-color:gray;
+z-index:1;
+display:none;
+}
+
+#progressbardiv{
+width:300px;
+height:100px;
+position:absolute;
+margin-left:40%;
+background-color:silver;
+z-index:1;
+display:none;
+text-align:center;
+}
+
+input{
+
+width:50px;
+}
+
+.wiggleclass{
+animation :Wiggle;
+}
+
+@keyframes Wiggle {
+    from {background-color: red;}
+    to {background-color: #8A0707;}
+}
+</style>
+<script src="..\localForage-1.5.3\dist\localforage.js"></script>
+
+<script type="text/x-mathjax-config">
+
+ MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { availableFonts: ["TeX"] },
+	 Safe: {
+    allow: {
+      classes: "safe",
+    }
+  }
+  });
+</script>
+</script>
+<script src="../MathJax-master/MathJax.js"></script>
+</head>
+<body>
+<div id="modal">In Progress..</div>
+<div class="navbar">
+  <a onclick="saveQuestion()"><i class="fa fa-floppy-o" aria-hidden="true" ></i></a>
+  <a onclick="pushToCloud()"> <i class="fa fa-cloud" aria-hidden="true"></i></a>
+  
+   <a href="#home"> <i class="fa fa-video-camera" aria-hidden="true"></i></a>
+   <a href="#home" id="closewindow">  <i class="fa fa-window-close-o" aria-hidden="true" ></i></a>
+   <a onclick="goToQuestion('backward')" id="backwards">  <i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i></a>
+  
+   <a onclick="goToQuestion('forward')" id="forwards">  <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></a>
+
+ <div class="dropdown">
+    <button class="dropbtn">Year 
+      <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-content">
+ <a  onclick="setYear(this.text)">2008</a> 
+  <a  onclick="setYear(this.text)">2009</a> 
+   <a href="#" onclick="setYear(this.text)">2010</a> 
+    <a href="#" onclick="setYear(this.text)">2011</a> 
+	 <a href="#" onclick="setYear(this.text)">2012</a> 
+	  <a href="#" onclick="setYear(this.text)">2013</a>
+        <a href="#" onclick="setYear(this.text)">2014</a> 
+    <a href="#" onclick="setYear(this.text)">2015</a> 
+	 <a href="#" onclick="setYear(this.text)">2016</a> 
+	  <a href="#" onclick="setYear(this.text)">2017</a>
+ <a href="#" onclick="setYear(this.text)">2018</a> 
+     
+    </div>
+  </div> 
+  <div class="dropdown">
+    <button class="dropbtn">Subject 
+      <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-content">
+      <a  onclick="setSubject(this.text)">Physics</a>
+      <a onclick="setSubject(this.text)">Chemistry</a>
+      <a href="#" onclick="setSubject(this.text)">Elective Maths</a>
+	  <a href="#" onclick="setSubject(this.text)"> Biology</a>
+      <a href="#" onclick="setSubject(this.text)">General Agricultural Science</a>
+      <a href="#" onclick="setSubject(this.text)">Animal Husbandry</a>  
+ <a href="#" onclick="setSubject(this.text)">Fisheries</a> 
+  <a href="#" onclick="setSubject(this.text)">Forestry</a> 
+   <a href="#" onclick="setSubject(this.text)">Crop Husbandry and Horticulture</a> 
+    <a href="#" onclick="setSubject(this.text)">Geograhy</a> 
+	 <a href="#" onclick="setSubject(this.text)">French</a> 
+	  <a href="#" onclick="setSubject(this.text)">Music</a> 
+            
+    </div>
+  </div> 
+<a id = "displaymessage"></a>
+</div>
+
+<div class="container">
+
+<div id="imagecontainer">
+<span>close</span>
+<object id="obj"></object>
+</div>
+
+<div id="progressbardiv">
+pushing to cloud
+<br>
+<br>
+<progress id="progressbar" value="0" max="100">
+</progress>
+</div>
+<div id="questionsraw">
+
+<div id="questiontext" contenteditable="true"></div>
+<div id="answer1" class="answertext" contenteditable="true"></div>
+<div id="answer2" class="answertext" contenteditable="true"></div>
+<div id="answer3" class="answertext" contenteditable="true"></div>
+<div id="answer4" class="answertext" contenteditable="true"></div>
+<div id="correctanswer" class="answertext" contenteditable="true"></div>
+<i class="fa fa-eye" aria-hidden="true" onclick="viewQuestion()"></i>
+</div>
+<div id="solution">
+<div id="solutionquestion" class="solutiontext" contenteditable="true"></div>
+<div id="solutionstep1" class="solutiontext" contenteditable="true"></div>
+<div id="solutionstep2" class="solutiontext" contenteditable="true"></div>
+<div id="solutionstep3" class="solutiontext" contenteditable="true"></div>
+<div id="solutionstep4" class="solutiontext" contenteditable="true"></div>
+<div id="solutionstep5" class="solutiontext" contenteditable="true"></div>
+<i class="fa fa-eye" aria-hidden="true" onclick="viewSolution()"></i>
+</div>
+
+<div id ="output">
+
+<div id="view1" class="MJX-viewtext" ></div>
+<div id="view2" class="MJX-viewtext"></div>
+<div id="view3" class="MJX-viewtext"></div>
+<div id="view4" class="MJX-viewtext"></div>
+<div id="view5" class="MJX-viewtext"></div>
+<div id="view6" class="MJX-viewtext"></div>
+
+
+<div id="videos">
+
+</div>
+</div>
+</div>
+<script src="..\js\objectives.js"></script>
+
+</body>
+</html>
