@@ -16,7 +16,7 @@
     "url": " https://github.com/hypemichael/studiesteacher.git"
   },
   "build": {
-    "appId": "yourappid",
+    "appId": "Studies-Teacher-WorkSpace",
     "dmg": {
       "contents": [
         {
