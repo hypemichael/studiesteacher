@@ -4,10 +4,22 @@ const BrowserWindow = require('electron').remote.BrowserWindow
 
 const path = require('path');
 
+ var obj = document.getElementById("obj");
+const ipcRenderer = require('electron').ipcRenderer;
+        // wait for an updateReady message
+        ipcRenderer.on('updateReady', function(event, text) {
+            // changes the text of the button
+           var conf = window.confirm("new version ready!");
+		   
+		   if(conf == true){
+		   ipcRenderer.send('quitAndInstall');
+		   }
+        });
+		
 
 // be executed in the renderer process for that window.
 // All of the Node.js APIs are available in this process.
- var obj = document.getElementById("obj");
+
 
 obj.onload = function(){
 	var objDoc = obj.contentDocument;

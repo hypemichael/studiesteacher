@@ -9,7 +9,7 @@
     "postinstall": "install-app-deps",
     "start": "npm install && electron .",
     "pack": "build --dir",
-    "dist": "build"
+    "dist": "electron-builder --publish always"
   },
   "repository": {
     "type": "git",
