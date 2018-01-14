@@ -69,6 +69,17 @@ animation-duration:4s;
 </style>
 <script>
 
+        const ipcRenderer = require('electron').ipcRenderer;
+        // wait for an updateReady message
+        ipcRenderer.on('updateReady', function(event, text) {
+            // changes the text of the button
+            var con = confirm ("new version ready!,download?");
+			if(con ==true){
+			ipcRenderer.send('quitAndInstall');
+			}
+        })
+ 
+
 		</script>
 <script src="js/lobby.js"></script>
 </head>

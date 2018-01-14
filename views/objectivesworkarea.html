@@ -257,7 +257,7 @@ animation :Wiggle;
   <a onclick="pushToCloud()"> <i class="fa fa-cloud" aria-hidden="true"></i></a>
   
    <a href="#home"> <i class="fa fa-video-camera" aria-hidden="true"></i></a>
-   <a href="#home" id="closewindow">  <i class="fa fa-window-close-o" aria-hidden="true" ></i></a>
+   <a href="#home" id="closewindow" onclick="clearStorage()">  <i class="fa fa-window-close-o" aria-hidden="true" ></i></a>
    <a onclick="goToQuestion('backward')" id="backwards">  <i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i></a>
   
    <a onclick="goToQuestion('forward')" id="forwards">  <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></a>
@@ -301,6 +301,7 @@ animation :Wiggle;
             
     </div>
   </div> 
+  <a id><input placeholder="question number" id="jumpinput" /><button onclick="jumpTo()" id="jumpto">Go</button></a>
 <a id = "displaymessage"></a>
 </div>
 
