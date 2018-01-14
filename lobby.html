@@ -50,7 +50,7 @@ animation: background;
 animation-duration:4s;
   animation-fill-mode: forwards;
 }
-#chat:hover{
+#update:hover{
 animation: background;
 animation-duration:4s;
   animation-fill-mode: forwards;
@@ -69,19 +69,11 @@ animation-duration:4s;
 </style>
 <script>
 
-        const ipcRenderer = require('electron').ipcRenderer;
-        // wait for an updateReady message
-        ipcRenderer.on('updateReady', function(event, text) {
-            // changes the text of the button
-            var con = confirm ("new version ready!,download?");
-			if(con ==true){
-			ipcRenderer.send('quitAndInstall');
-			}
-        })
- 
+        
 
 		</script>
 <script src="js/lobby.js"></script>
+
 </head>
 <body>
 <br>
@@ -93,8 +85,8 @@ animation-duration:4s;
 Work
 <i class="fa fa-briefcase" aria-hidden="true"></i>
 </button>
-<button id="chat" class="button">
-Chat
+<button id="update" class="button">
+Update
 <i class="fa fa-commenting-o" aria-hidden="true"></i>
 </button>
 </div>
@@ -108,6 +100,10 @@ Files
 <i class="fa fa-files-o" aria-hidden="true"></i>
 </button>
 </div>
+
+<script>
+require("../renderer.js")
+</script>
 </body>
 
 </html>

@@ -44,6 +44,7 @@
   },
   "dependencies": {
     "dotenv": "^4.0.0",
+    "electron-simple-updater": "^1.2.3",
     "electron-updater": "^2.18.2",
     "mongodb": "^3.0.1"
   },

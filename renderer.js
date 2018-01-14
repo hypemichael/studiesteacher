@@ -1,20 +1,12 @@
 // This file is required by the index.html file and will
 const BrowserWindow = require('electron').remote.BrowserWindow
 
-
+const updater = remote.require('electron-simple-updater');
 const path = require('path');
 
+
  var obj = document.getElementById("obj");
-const ipcRenderer = require('electron').ipcRenderer;
-        // wait for an updateReady message
-        ipcRenderer.on('updateReady', function(event, text) {
-            // changes the text of the button
-           var conf = window.confirm("new version ready!");
-		   
-		   if(conf == true){
-		   ipcRenderer.send('quitAndInstall');
-		   }
-        });
+
 		
 
 // be executed in the renderer process for that window.
@@ -57,4 +49,21 @@ obj.style.animationFillMode = "forwards";
 	 }
 
 
+}
+
+attachUiHandlers();
+
+function attachUiHandlers() {
+  const btnUpdate        = document.getElementById('update');
+
+  btnUpdate.addEventListener('click', () => {
+    updater.checkForUpdates();
+    var con = confimr ("check for updates and download?");
+	
+	if(con == true){
+	 updater.downloadUpdate();	
+	}
+  });
+
+ 
 }
