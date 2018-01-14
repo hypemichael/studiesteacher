@@ -1,30 +1,200 @@
 <html>
+<style>
+
+body{
+background-color:silver;
+font-family:Arial;
+}
+#container{
+display:flex;
+justify-content:center;
+width:90%;
+height:80%;
+}
+#collectionsdiv{
+width:30%;
+height:100%;
+background-color:white;
+margin-left:5px;
+}
+
+#docsdiv{
+width:60%;
+height:100%;
+background-color:white;
+margin-left:5px;
+ word-wrap: break-word;
+ overflow-y:scroll;
+}
+#buttondiv{
+width:90%;
+height:20px;
+text-align:center;
+position:absolute;
+bottom:15px;
+}
+
+button{
+width:20%;
+height:30px;
+}
+
+#form{
+width:200px;
+height:200px;
+margin: 0 auto;
+background-color:gray;
+line-height:200px;
+z-index:1;
+position:absolute;
+top:100px;
+left:200px;
+display:none;
+}
+
+input{
+margin-top:80px;
+margin-left:10px;
+}
+#delbutton{
+margin-top:10px;
+width:100%;
+}
+
+#delbutton:hover{
+background-color:red;
+}
+
+#delete:hover{
+background-color:red;
+}
+
+#getcollections:hover{
+background-color:blue;
+}
+.collectionelements:hover{
+color:blue;
+}
+</style>
 <body>
-<input id="input" type="file" multiple  onchange="showFiles()"/> <button>Send to cloud</button>
-<div id="filelist"></div>
-
+<div id="message">Subject</div>
+<br>
+<div id="container">
+<div id="collectionsdiv">
+</div>
+<div id="docsdiv">
+</div>
+</div>
+<div id="form">
+<input placeholder="password" id="input"/><button onclick="realDel()" id="delbutton">delete</button>
+</div>
+<div id="buttondiv">
+<button onclick="getCollections()" id="getcollections">Get Db</button>
+<button onclick="deleteDoc()" id="delete">Delete doc</button>
+</div>
 <script>
-function showFiles(){
-var input = document.getElementById("input").files;
-for(x in input){
-var div = document.createElement("div");
-div.style.width="100px";
-div.style.height="100px";
-div.style.backgroundColor = "gray";
-div.style.marginLeft = "10px";
-div.style.marginTop = "10px";
-div.style.display = "inline-block";
-var splitfile = input[x].name.split('.').pop();
-if(splitfile !== "apk" || "svg"||"img"||"txt"||"html"||"js"||"jpg"||"png"){
-delete input[x];
+
+var collectionname ="";
+var docname = "";
+
+function getCollections() {
+var collectionsdiv = document.getElementById("collectionsdiv");
+collectionsdiv.innerText = "";
+document.getElementById("message").innerText = "connecting";
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+	document.getElementById("message").innerText = "last operation was successful"
+	var jsonlist = JSON.parse(this.responseText);
+	for(var x = 0;x<jsonlist.length;x++){
+	var list = document.createElement("div");
+	var text = document.createTextNode(jsonlist[x].name);
+	list.appendChild(text);
+	list.className = "collectionelements";
+	list.addEventListener("click",function(){
+	collectionname = this.innerText;
+	getDoc();
+	ripple();
+	})
+	if(list.innerText !== "undefined"){
+	collectionsdiv.appendChild(list).append(document.createElement("br"));
+	}
+	}
+
+    }
+  };
+  xhttp.open("GET", "http://localhost:9090/getcollections", true);
+  xhttp.send();
 }
- var ul =document.createTextNode(input[x].name)
-div.appendChild(ul);
-document.body.appendChild(div);
+
+
+function getDoc(){
+document.getElementById("message").innerText = "connecting";
+  var xhttp = new XMLHttpRequest();
+var docsdiv = document.getElementById("docsdiv");
+xhttp.onreadystatechange = function() {
+if(xhttp.readyState == 4 && xhttp.status == 200){
+docsdiv.innerHTML ="";
+document.getElementById("message").innerText = "current selection:"+ " "+collectionname;
+var jsonlist = JSON.parse(xhttp.responseText);
+var len = Object.values(jsonlist[0].questions)
+
+   for(var x = 0;x<len.length;x++){
+if(JSON.stringify(len[x]).solution == "undefined"){
+	docsdiv.innerHTML += JSON.stringify(len[x].question)+  "<br>"+JSON.stringify(len[x].answerA)+ " "+JSON.stringify(len[x].answerB)+ " "+JSON.stringify(len[x].answerC)+ " "+JSON.stringify(len[x].answerD)+ " "+JSON.stringify(len[x].correctAnswer)+"<br></br>";
 }
+else{
+docsdiv.innerHTML += JSON.stringify(len[x].question)+  "<br>"+JSON.stringify(len[x].answerA)+ " "+JSON.stringify(len[x].answerB)+ " "+JSON.stringify(len[x].answerC)+ " "+JSON.stringify(len[x].answerD)+ " "+JSON.stringify(len[x].correctAnswer)+" "+JSON.stringify(len[x].solution)+"<br></br>";
+	
+}
+}
+}
+}
+xhttp.open("GET", "http://localhost:9090/getdocs?collectionname="+collectionname, true);
+  xhttp.send()
 
 }
 
+function deleteDoc(){
+var form = document.getElementById("form");
+if(collectionname.length >2){
+var con = confirm("are you sure you want to delete" + " " + collectionname+ "?");
+if(con == true){
+form.style.display="block";
+}
+}
+else{
+alert("no doc selected");
+}
+}
+
+ function realDel(){
+var form = document.getElementById("form"); 
+var input = document.getElementById("input"); 
+if(input.value == "becework"){
+form.style.display="none";
+var xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange = function() {
+if(xhttp.readyState == 4 && xhttp.status == 200){
+alert(collectionname + " "+ "deleted");
+location.reload();
+}
+}
+xhttp.open("GET", "http://localhost:9090/deletecollection?collectionname="+collectionname, true);
+  xhttp.send()
+  
+  }
+  
+  else{
+alert("not allowed!");
+form.style.display="none";
+}
+  }
+  
+  function ripple(){
+
+
+  }
 </script>
 </body>
 </html>

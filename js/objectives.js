@@ -260,6 +260,7 @@ localforage.iterate(function(value, key, iterationNumber) {
     jsonstore.push(objstore.iterationNumber);
 	
 }).then(function() {
+	sendDoc(jsonstore)
    progressdiv.style.display="none";
    alert("saving to cloud" + " " + Object.keys(jsonstore[0].solution));
    jsonstore = [];
@@ -272,7 +273,7 @@ objstore= {};
 	
 }
 
-function loadDoc(doc) {
+function sendDoc(doc) {
 	var collection  = localStorage.subject + localStorage.year;
 	var docu =JSON.stringify({'collection':collection,'data':doc});
   var xhttp = new XMLHttpRequest();

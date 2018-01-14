@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "license": "MIT",
   "description": "your app description",
-  "author": "xyz <xyz@gmail.com>",
+  "author": "Sigma F ",
   "main": "main.js",
   "scripts": {
     "postinstall": "install-app-deps",
@@ -44,9 +44,10 @@
   },
   "dependencies": {
     "dotenv": "^4.0.0",
-    "electron-simple-updater": "^1.2.3",
     "electron-updater": "^2.18.2",
-    "mongodb": "^3.0.1"
+    "express": "^4.16.2",
+    "mongodb": "^2.2.33",
+    "requirejs": "^2.3.5"
   },
   "devDependencies": {
     "electron": "latest",

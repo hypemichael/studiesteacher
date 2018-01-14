@@ -18,14 +18,6 @@ var querystring = require('querystring');
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
 
-const updater              = require('electron-simple-updater');
-
-
-updater.init({
-  checkUpdateOnStart: true,
-  autoDownload: false
-});
-
 
 
 function createWindow () {

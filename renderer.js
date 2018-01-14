@@ -1,7 +1,7 @@
 // This file is required by the index.html file and will
 const BrowserWindow = require('electron').remote.BrowserWindow
 
-const updater = remote.require('electron-simple-updater');
+
 const path = require('path');
 
 
@@ -47,23 +47,39 @@ obj.style.animationFillMode = "forwards";
 
 
 	 }
-
-
-}
-
-attachUiHandlers();
-
-function attachUiHandlers() {
-  const btnUpdate        = document.getElementById('update');
-
-  btnUpdate.addEventListener('click', () => {
-    updater.checkForUpdates();
-    var con = confimr ("check for updates and download?");
+	 
+	  if(objDoc.getElementById("files")){
+	var objfiles = objDoc.getElementById("files");
 	
-	if(con == true){
-	 updater.downloadUpdate();	
-	}
-  });
+	objfiles.addEventListener("click",function(event){
+ const modalPath = path.join('file://', __dirname, '/views/filespage.html')
+  let win = new BrowserWindow({   width: 1200, height: 700})
+  win.on('close', function () { win = null })
+  win.loadURL(modalPath)
+  win.show()
+})
 
- 
+
+	 }
+	 
+	  if(objDoc.getElementById("backbutton")){
+	var objback = objDoc.getElementById("backbutton");
+objback.addEventListener("click",function(event){
+	var promise = new Promise((resolve,reject)=>{
+obj.style.animation = "fadeOut 2s 1";
+obj.style.animationFillMode = "forwards";
+setTimeout(function(){resolve("yes")},2000);
+	})
+	
+	promise.then((resolve)=>{
+	obj.data = "lobby.html"
+obj.style.animation = "fadeIn 2s 1";
+obj.style.animationFillMode = "forwards";	
+})
+
+
+	 })
+	  }
+
 }
+
