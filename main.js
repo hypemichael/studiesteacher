@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const electron = require('electron');
 // Module to control application life.
 
@@ -6,7 +8,7 @@ const app = electron.app;
 
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow;
-const {autoUpdater} = require("electron-updater");
+
 var http = require('http');
 const path = require('path')
 const url = require('url');
@@ -46,7 +48,7 @@ function createWindow () {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', function(){
-	 autoUpdater.checkForUpdates();
+
 createWindow})
 
 // Quit when all windows are closed.
@@ -69,13 +71,5 @@ app.on('activate', function () {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
 
-autoUpdater.on('update-downloaded', (info) => {
-    win.webContents.send('updateReady')
-});
-
-// when receiving a quitAndInstall signal, quit and install the new version ;)
-app.on("quitAndInstall", (event, arg) => {
-    autoUpdater.quitAndInstall();
-})
 
 

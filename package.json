@@ -9,7 +9,7 @@
     "postinstall": "install-app-deps",
     "start": "npm install && electron .",
     "pack": "build --dir",
-    "dist": "electron-builder --publish always"
+    "dist": "build"
   },
   "repository": {
     "type": "git",
@@ -43,6 +43,7 @@
     }
   },
   "dependencies": {
+    "dotenv": "^4.0.0",
     "electron-updater": "^2.18.2",
     "mongodb": "^3.0.1"
   },
